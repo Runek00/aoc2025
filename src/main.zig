@@ -1,11 +1,7 @@
 const std = @import("std");
-const aoc2025 = @import("aoc2025");
+const lib = @import("lib/aocLib.zig");
 
-pub fn main() !void {
-    // Prints to stderr, ignoring potential errors.
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-    try aoc2025.bufferedPrint();
-}
+pub fn main() !void {}
 
 test "simple test" {
     const gpa = std.testing.allocator;
