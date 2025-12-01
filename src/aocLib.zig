@@ -1,11 +1,11 @@
 const std = @import("std");
 
-pub fn fileToTable(path: []const u8) [][]u8 {
+pub fn fileToTable(comptime path: []const u8) std.mem.SplitIterator(u8, .scalar) {
     const file = fileToString(path);
-    std.mem.splitScalar([]u8, file, "\n");
+    return std.mem.splitScalar(u8, file, '\n');
 }
 
-pub fn fileToString(path: []const u8) []u8 {
+pub fn fileToString(comptime path: []const u8) []const u8 {
     const file = @embedFile(path);
     return file;
 }
