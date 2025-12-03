@@ -1,5 +1,10 @@
 const std = @import("std");
 
+pub fn unparse(int: i64) ![]const u8 {
+    var buf: [256]u8 = undefined;
+    return try std.fmt.bufPrint(&buf, "{}", .{int});
+}
+
 pub fn fileToTable(comptime path: []const u8) std.mem.SplitIterator(u8, .scalar) {
     const file = fileToString(path);
     return std.mem.splitScalar(u8, file, '\n');
@@ -7,6 +12,9 @@ pub fn fileToTable(comptime path: []const u8) std.mem.SplitIterator(u8, .scalar)
 
 pub fn fileToString(comptime path: []const u8) []const u8 {
     const file = @embedFile(path);
+    if (file[file.len - 1] == '\n') {
+        return file[0 .. file.len - 1];
+    }
     return file;
 }
 
@@ -118,4 +126,16 @@ pub fn opposite(direction: Dir) Dir {
 
 pub fn getAllDirections() [4]Dir {
     return [_]Dir{ N, S, E, W };
+}
+
+pub fn compStrings(str1: []const u8, str2: []const u8) bool {
+    if (str1.len != str2.len) {
+        return false;
+    }
+    for (0..str1.len) |i| {
+        if (str1[i] != str2[i]) {
+            return false;
+        }
+    }
+    return true;
 }
